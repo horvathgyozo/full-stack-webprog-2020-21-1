@@ -13,6 +13,6 @@ deploy:
   skip_cleanup: true
   provider: heroku
   api_key:
-    secure: 66279025-e39d-44a7-b7bd-373f3f51c68e
+    secure: FnHreNsom9+V5y5Ra68osW1cTxPQ7azxdNxxOLdYlDsvKIbQH0plf/ec347TXovtAOlPz036PLmqJ0yaNg7kpK5AkoP/PTHGEBNnWfQcaoPGNkc8+AJHinNtBDqHMb2zxS/Uh0iEf/KgS9eFja74jHSCkj5RWqn7yO6udjMy8vs=
   app: fswp-java-restapi-issuetracker
   on: main

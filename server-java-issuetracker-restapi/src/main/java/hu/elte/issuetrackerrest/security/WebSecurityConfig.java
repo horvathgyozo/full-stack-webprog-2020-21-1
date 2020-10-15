@@ -44,7 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         String secret = environment.getProperty(SECRET_PROPERTY_NAME);
         http    
-            .authorizeRequests().permitAll();
+            .authorizeRequests().anyRequest().permitAll();
 //                 .cors().and()
 //                 .csrf().disable()
 //                 .headers()

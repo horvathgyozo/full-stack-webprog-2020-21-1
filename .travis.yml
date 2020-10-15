@@ -3,10 +3,13 @@ jdk: openjdk8
 cache:
   directories:
     - $HOME/.m2
+
 before_install: cd server-java-issuetracker-restapi
 install: true
+
 script: mvn -B test  # mvn clean install is működne
 
+before_deploy: cd server-java-issuetracker-restapi
 deploy:
   provider: heroku
   api_key:

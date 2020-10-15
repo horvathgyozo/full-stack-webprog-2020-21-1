@@ -44,22 +44,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         String secret = environment.getProperty(SECRET_PROPERTY_NAME);
         http    
-                .cors().and()
-                .csrf().disable()
-                .headers()
-                    .frameOptions().disable()
-                    .and()
-                .authorizeRequests()
-//                    .antMatchers(HttpMethod.POST, "/api/auth").permitAll()
-                    .antMatchers(HttpMethod.POST, "/users").permitAll()
-                    .antMatchers("/h2/**").permitAll()
-                    .anyRequest().authenticated()
-                    .and()
-//                .exceptionHandling().authenticationEntryPoint(WebSecurityConfig::handleException)
-//                    .and()
-                .addFilter(new JWTAuthenticationFilter(authenticationManager(), secret))
-                .addFilter(new JWTAuthorizationFilter(authenticationManager(), secret))
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+            .authorizeRequests().permitAll();
+//                 .cors().and()
+//                 .csrf().disable()
+//                 .headers()
+//                     .frameOptions().disable()
+//                     .and()
+//                 .authorizeRequests()
+// //                    .antMatchers(HttpMethod.POST, "/api/auth").permitAll()
+//                     .antMatchers(HttpMethod.POST, "/users").permitAll()
+//                     .antMatchers("/h2/**").permitAll()
+//                     .anyRequest().authenticated()
+//                     .and()
+// //                .exceptionHandling().authenticationEntryPoint(WebSecurityConfig::handleException)
+// //                    .and()
+//                 .addFilter(new JWTAuthenticationFilter(authenticationManager(), secret))
+//                 .addFilter(new JWTAuthorizationFilter(authenticationManager(), secret))
+//                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
                 
     }
 

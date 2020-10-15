@@ -2,4 +2,4 @@ language: java
 jdk: openjdk8
 before_install: cd server-java-issuetracker-restapi
 install: true
-script: mvn clean install
+script: mvn -B test

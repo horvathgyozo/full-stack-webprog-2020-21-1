@@ -9,8 +9,8 @@ install: true
 
 script: mvn -B test  # mvn clean install is működne
 
-before_deploy: cd server-java-issuetracker-restapi
 deploy:
+  skip_cleanup: true
   provider: heroku
   api_key:
     secure: 66279025-e39d-44a7-b7bd-373f3f51c68e

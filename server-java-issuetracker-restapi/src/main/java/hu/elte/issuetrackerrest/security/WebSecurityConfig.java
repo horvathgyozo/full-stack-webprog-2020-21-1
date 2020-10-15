@@ -45,7 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         String secret = environment.getProperty(SECRET_PROPERTY_NAME);
         http    
             // .authorizeRequests().anyRequest().permitAll();
-                // .cors().and()
+                .cors().and()
                 .csrf().disable()
                 .headers()
                     .frameOptions().disable()

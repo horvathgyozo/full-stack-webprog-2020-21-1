@@ -20,5 +20,6 @@ jobs:
       app: fswp-java-restapi-issuetracker
       on: main
 
-  - language: node
+  - language: node_js
+    node_js: node
     before_install: cd server-typescript-issuetracker-restapi

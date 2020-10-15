@@ -1,9 +1,5 @@
 language: java
-jdk: 
-  - openjdk8
-before_install:
-  - cd server-java-issuetracker-restapi
-before_script:
-  - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
-script:
-  - mvn -B test
+jdk: openjdk8
+before_install: cd server-java-issuetracker-restapi
+install: true
+script: mvn clean install

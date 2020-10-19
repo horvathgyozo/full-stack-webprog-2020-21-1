@@ -1,5 +1,7 @@
-insert into user (username, password, enabled, role) values ('admin', 'admin', true, 'ROLE_ADMIN');
-insert into user (username, password, enabled, role) values ('user', 'user', true, 'ROLE_USER'); 
+insert into user (username, password, enabled, role) values ('admin', '$2a$10$Xtv0umJn1DDZ3ds5FTWHUOHuwJnRQ0qrYpTA1ANaRl8vdiwo1R1iW', true, 'ROLE_ADMIN');
+-- password: admin
+insert into user (username, password, enabled, role) values ('user', '$2a$10$QUhsliTs8Ufe9nSQgIwzzeDktWOdDw8WY77lN.3AAXL5vVDI2EoVO', true, 'ROLE_USER');
+-- password: user
 
 insert into issue (user_id, title, description, place, status, created_at, updated_at) values (1, 'issue1', 'description1', 'place1', 'NEW', CURRENT_TIMESTAMP(),  CURRENT_TIMESTAMP());
 insert into issue (user_id, title, description, place, status, created_at, updated_at) values (1, 'issue2', 'description2', 'place2', 'DOING', CURRENT_TIMESTAMP(),  CURRENT_TIMESTAMP());

@@ -22,12 +22,4 @@ public class IssuetrackerrestApplication {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    @EventListener
-    public void seed(ContextRefreshedEvent event) {
-        for (User user : userRepository.findAll()) {
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-            userRepository.save(user);
-        }
-    }
-
 }

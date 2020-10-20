@@ -26,6 +26,7 @@ jobs:
       directories:
         - node_modules
     before_install: cd server-typescript-issuetracker-restapi
+    after_success: npm build
     deploy:
       skip_cleanup: true
       provider: heroku

@@ -1,0 +1,14 @@
+<mat-list>
+	<mat-list-item routerLink="/issues/open" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" matRipple>
+		<mat-icon mat-list-icon>drafts</mat-icon>
+		<h4 mat-line>Nyitott jegyek</h4>
+	</mat-list-item>
+	<mat-list-item routerLink="/issues/closed" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" matRipple>
+		<mat-icon mat-list-icon>mail</mat-icon>
+		<h4 mat-line>Lezárt jegyek</h4>
+	</mat-list-item>
+	<mat-list-item routerLink="/settings" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" matRipple>
+		<mat-icon mat-list-icon>settings</mat-icon>
+		<h4 mat-line>Beállítások</h4>
+	</mat-list-item>
+</mat-list>

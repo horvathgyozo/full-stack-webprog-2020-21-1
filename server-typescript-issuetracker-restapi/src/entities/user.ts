@@ -7,6 +7,7 @@ import {
   Property,
 } from '@mikro-orm/core';
 import { Issue } from './issue';
+import { Message } from './message';
 
 @Entity()
 export class User {
@@ -16,10 +17,10 @@ export class User {
   @Property()
   username!: string;
 
-  @Property()
+  @Property({ hidden: true })
   password!: string;
 
-  @Property()
+  @Property({ hidden: true })
   enabled: boolean = true;
 
   @Enum()
@@ -27,6 +28,9 @@ export class User {
 
   @OneToMany(() => Issue, issue => issue.user)
   issues = new Collection<Issue>(this);
+
+  @OneToMany(() => Message, message => message.user)
+  messages = new Collection<Message>(this);
 }
 
 export enum UserRole {

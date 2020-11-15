@@ -77,7 +77,10 @@ describe('Issue Tracker', () => {
             place: '2-202',
           })
           .expect(200)
-          .expect(createdIssue);
+          .expect({
+            ...createdIssue,
+            messages: [],
+          });
       });
 
       it('should return the newly created issue in an array for the user', async () => {
@@ -123,10 +126,10 @@ describe('Issue Tracker', () => {
           .get('/issues/1')
           .set('Authorization', token)
           .expect(200)
-          .expect(res => {
+          .expect((res) => {
             const userId = res.body.user.id;
             res.body.user = userId;
-            expect(res.body).toEqual(createdIssue);
+            expect(res.body).toEqual({ ...createdIssue, messages: [] });
           });
       });
 
@@ -135,6 +138,30 @@ describe('Issue Tracker', () => {
           .get('/issues/10')
           .set('Authorization', token)
           .expect(404);
+      });
+    });
+
+    describe('/issues/:id/messages', () => {
+      it('should return the newly created message', async () => {
+        await requestHandle
+          .post('/issues/1/messages')
+          .set('Authorization', token)
+          .send({
+            text: 'cica',
+          })
+          .expect(200)
+          .expect((res) => {
+            const userId = res.body.user.id;
+            res.body.user = userId;
+            expect(res.body).toEqual({
+              id: 1,
+              text: 'cica',
+              createdAt: time.toISOString(),
+              modifiedAt: time.toISOString(),
+              user: 3,
+              issue: 1,
+            });
+          });
       });
     });
   });

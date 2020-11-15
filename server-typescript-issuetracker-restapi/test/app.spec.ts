@@ -164,5 +164,60 @@ describe('Issue Tracker', () => {
           });
       });
     });
+
+    describe('/labels', () => {
+      it('should return the newly created label', async () => {
+        await requestHandle
+          .post('/labels')
+          .set('Authorization', token)
+          .send({
+            text: 'cica',
+          })
+          .expect(200)
+          .expect({
+            id: 1,
+            text: 'cica',
+            issues: [],
+          });
+      });
+
+      it('should return all the labels', async () => {
+        await requestHandle
+          .get('/labels')
+          .set('Authorization', token)
+          .expect(200)
+          .expect([{
+            id: 1,
+            text: 'cica',
+          }]);
+      });
+
+      it('should query the labels by text', async () => {
+        await requestHandle
+          .get('/labels?text=alma')
+          .set('Authorization', token)
+          .expect(200)
+          .expect([]);
+      });
+
+      it('should add the label to the issue', async () => {
+        await requestHandle
+          .put('/issues/1')
+          .set('Authorization', token)
+          .send({
+            labels: [1]
+          })
+          .expect(200);
+        await requestHandle
+          .get('/issues/1')
+          .set('Authorization', token)
+          .expect(res => {
+            expect(res.body.labels).toEqual([{
+              id: 1,
+              text: 'cica',
+            }])
+          });
+      });
+    });
   });
 });

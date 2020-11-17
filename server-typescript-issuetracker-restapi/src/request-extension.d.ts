@@ -13,6 +13,7 @@ declare global {
     interface Request {
       orm: MikroORM<IDatabaseDriver>;
       issuesRepository?: EntityRepository<Issue>;
+      labelsRepository?: EntityRepository<Label>;
       userRepository?: EntityRepository<ApplicationUser>;
     }
   }

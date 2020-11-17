@@ -5,11 +5,13 @@ import { routes } from './controllers';
 import bodyParser from 'body-parser';
 import { passport } from './security/passport';
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
 
 export const app = express();
 
 app.use(bodyParser.json());
 app.use(cookieParser());
+app.use(cors());
 
 app.use(passport.initialize());
 

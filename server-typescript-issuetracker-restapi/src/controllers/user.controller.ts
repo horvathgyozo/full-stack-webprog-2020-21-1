@@ -36,7 +36,9 @@ userRouter
     if (hashedPassword !== user.password) {
       return res.sendStatus(401);
     }
-    return res.send(generateJwt(user));
+    return res.send({
+      token: generateJwt(user)
+    });
   });
 
 interface AuthenticationDto {

@@ -51,7 +51,7 @@ describe('Issue Tracker', () => {
 
     beforeEach(async () => {
       const loginResponse = await requestHandle.post('/user/login').send(user);
-      token = `Bearer ${loginResponse.text}`;
+      token = `Bearer ${loginResponse.body.token}`;
     });
 
     describe('/issues', () => {
@@ -92,7 +92,7 @@ describe('Issue Tracker', () => {
         const loginResponse = await requestHandle
           .post('/user/login')
           .send({ username: 'papi', password: 'papi' });
-        const otherToken = `Bearer ${loginResponse.text}`;
+        const otherToken = `Bearer ${loginResponse.body.token}`;
         await requestHandle
           .get('/issues')
           .set('Authorization', otherToken)
@@ -104,7 +104,7 @@ describe('Issue Tracker', () => {
         const loginResponse = await requestHandle
           .post('/user/login')
           .send({ username: 'admin', password: 'admin' });
-        const otherToken = `Bearer ${loginResponse.text}`;
+        const otherToken = `Bearer ${loginResponse.body.token}`;
         await requestHandle
           .get('/issues')
           .set('Authorization', otherToken)

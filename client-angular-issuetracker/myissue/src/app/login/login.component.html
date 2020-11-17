@@ -1,0 +1,35 @@
+<div fxLayoutAlign="center center" fxFlexFill>
+    <mat-card fxFlex="25">
+        <mat-toolbar color="primary">Bejelentkezés</mat-toolbar>
+        <form [formGroup]="loginForm" fxLayoutAlign="stretch" fxLayout="column" (ngSubmit)="login(loginForm)" ovalidate>
+            <mat-form-field>
+                <input
+                    matInput
+                    type="text"
+                    placeholder="Felhasználónév"
+                    color="primary"
+                    formControlName="username"
+                    required
+                >
+                <mat-error>Mező kitöltése kötelező!</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <input
+                    matInput
+                    type="password"
+                    placeholder="Jelszó"
+                    color="primary"
+                    formControlName="password"
+                    required
+                >
+                <mat-error>Mező kitöltése kötelező!</mat-error>
+            </mat-form-field>
+            <button
+				mat-raised-button
+				color="primary"
+			>
+				Belépés
+			</button>
+        </form>
+    </mat-card>
+</div>

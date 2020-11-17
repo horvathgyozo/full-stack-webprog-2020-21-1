@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
@@ -9,7 +9,7 @@ import { IssueService } from '@core/services/issue.service';
   templateUrl: './add-issue.component.html',
   styleUrls: ['./add-issue.component.scss']
 })
-export class AddIssueComponent implements OnInit {
+export class AddIssueComponent {
 
   public addIssueForm: FormGroup;
 
@@ -22,9 +22,6 @@ export class AddIssueComponent implements OnInit {
       type: [null, Validators.required],
       details: [null, Validators.required]
     });
-  }
-
-  ngOnInit(): void {
   }
 
 	addIssue(form: FormGroup) { }

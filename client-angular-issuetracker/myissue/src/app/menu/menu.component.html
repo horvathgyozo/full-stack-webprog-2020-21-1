@@ -11,4 +11,8 @@
 		<mat-icon mat-list-icon>settings</mat-icon>
 		<h4 mat-line>Beállítások</h4>
 	</mat-list-item>
+	<mat-list-item *ngIf="(isLoggedIn$ | async)" (click)="logout()" matRipple>
+		<mat-icon mat-list-icon>logout</mat-icon>
+		<h4 mat-line>Kijelentkezés</h4>
+	</mat-list-item>
 </mat-list>

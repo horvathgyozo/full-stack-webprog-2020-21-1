@@ -3,6 +3,7 @@ import { Issue } from '../entities/issue';
 import { wrap } from '@mikro-orm/core';
 import { authorize } from '../security/authorize';
 import { User, UserRole } from '../entities/user';
+import { Message } from '../entities/message';
 
 export const issuesRouter = Router();
 
@@ -37,7 +38,7 @@ issuesRouter
     const issue = await req.issuesRepository!.findOne(
       { id: parseInt(req.params.id) },
       {
-        populate: ['labels', 'user'],
+        populate: ['labels', 'user', 'messages', 'messages.user'],
       },
     );
     if (!issue) {
@@ -78,6 +79,29 @@ issuesRouter
 
     res.send(issue);
   })
+  .put('/:id', async (req, res) => {
+    const issue = await req.issuesRepository!.findOne(
+      { id: parseInt(req.params.id) },
+      {
+        populate: ['labels', 'user', 'messages', 'messages.user'],
+      },
+    );
+    if (!issue) {
+      return res.sendStatus(404);
+    }
+    if (req.user!.role !== UserRole.Admin && req.user!.id !== issue.user.id) {
+      return res.sendStatus(403);
+    }
+    wrap(issue).assign({
+      title: req.body.title || issue.title,
+      description: req.body.description || issue.description,
+      place: req.body.place || issue.place,
+      labels: req.body.labels || issue.labels,
+      status: req.body.status || issue.status,
+    }, { em: req.orm.em });
+    await req.issuesRepository!.persistAndFlush(issue);
+    res.send(issue);
+  })
   .delete('/:id', authorize(UserRole.Admin), async (req, res) => {
     const id = req.params.id;
     const deletedCount = await req.issuesRepository?.nativeDelete({ id });
@@ -85,4 +109,40 @@ issuesRouter
       return res.sendStatus(200);
     }
     return res.sendStatus(404);
+  })
+  .post('/:id/messages', async (req, res) => {
+    const issue = await req.issuesRepository!.findOne(
+      { id: parseInt(req.params.id) },
+      {
+        populate: ['labels', 'user', 'messages'],
+      },
+    );
+    if (!issue) {
+      return res.sendStatus(404);
+    }
+    if (req.user!.role !== UserRole.Admin && req.user!.id !== issue.user.id) {
+      return res.sendStatus(403);
+    }
+    const newMessage = new Message();
+    wrap(newMessage).assign(req.body);
+    newMessage.user = req.orm.em.getReference(User, req.user!.id);;
+    issue.messages.add(newMessage);
+    await req.issuesRepository!.persistAndFlush(issue);
+    res.send(newMessage);
+  })
+  .get('/:id/messages', async (req, res) => {
+    const issue = await req.issuesRepository!.findOne(
+      { id: parseInt(req.params.id) },
+      {
+        populate: ['user', 'messages', 'messages.user'],
+      },
+    );
+    if (!issue) {
+      return res.sendStatus(404);
+    }
+    if (req.user!.role !== UserRole.Admin && req.user!.id !== issue.user.id) {
+      return res.sendStatus(403);
+    }
+    res.send(issue.messages);
   });
+

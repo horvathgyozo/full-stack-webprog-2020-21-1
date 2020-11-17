@@ -1,5 +1,6 @@
-import { Entity, PrimaryKey, Property, Enum, Collection, ManyToMany, ManyToOne } from '@mikro-orm/core';
+import { Entity, PrimaryKey, Property, Enum, Collection, ManyToMany, ManyToOne, OneToMany } from '@mikro-orm/core';
 import { Label } from './label';
+import { Message } from './message';
 import { User } from './user';
 
 @Entity()
@@ -31,6 +32,9 @@ export class Issue {
 
   @ManyToOne(() => User)
   user!: User;
+
+  @OneToMany(() => Message, message => message.issue)
+  messages = new Collection<Message>(this);
 }
 
 export enum IssueStatus {

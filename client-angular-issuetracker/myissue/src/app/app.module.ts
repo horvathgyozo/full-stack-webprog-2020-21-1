@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
@@ -26,7 +28,8 @@ import { ProfileComponent } from './profile/profile.component';
 import { IssuesComponent } from './issues/issues.component';
 	import { IssueComponent } from './issues/issue/issue.component';
 import { AddIssueComponent } from './issues/add-issue/add-issue.component';
-		//import { IssueDialogComponent } from './issues/issue/issue.component';
+import { LoginComponent } from './login/login.component';
+	//import { IssueDialogComponent } from './issues/issue/issue.component';
 
 @NgModule({
 	declarations: [
@@ -36,7 +39,8 @@ import { AddIssueComponent } from './issues/add-issue/add-issue.component';
 		ProfileComponent,
 		IssuesComponent,
 			IssueComponent,
-			AddIssueComponent
+			AddIssueComponent,
+			LoginComponent
 				//IssueDialogComponent
 	],
 	imports: [
@@ -44,9 +48,11 @@ import { AddIssueComponent } from './issues/add-issue/add-issue.component';
 		BrowserAnimationsModule,
 		FormsModule,
 		ReactiveFormsModule,
+		HttpClientModule,
 		FlexLayoutModule,
 		MatToolbarModule,
 		MatSidenavModule,
+		MatCardModule,
 		MatInputModule,
 		MatSelectModule,
 		MatButtonModule,

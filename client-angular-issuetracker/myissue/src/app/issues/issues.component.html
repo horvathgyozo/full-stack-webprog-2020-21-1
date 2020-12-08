@@ -1,18 +1,6 @@
-<div class="issue" *ngFor="let issue of is.getIssues()">
-	<mat-accordion multi>
-		<mat-expansion-panel>
-			<mat-expansion-panel-header>
-				<mat-panel-title>
-					#{{ issue.iid }}
-				</mat-panel-title>
-				<mat-panel-description>
-					{{ (issue.details.length > 50) ? (issue.details | slice:0:50) + '...' : issue.details }}
-					<mat-icon>assignment</mat-icon>
-				</mat-panel-description>
-			</mat-expansion-panel-header>
-			{{ issue.details }}
-		</mat-expansion-panel>
-	</mat-accordion>
+<h2>Hibabejelentések:</h2>
+<div class="issue" *ngFor="let issue of (is.issues$ | async)">
+	<app-issue [issue]="issue"></app-issue>
 </div>
 <button mat-mini-fab color="accent" class="add-button" (click)="openAddIssueDialog()" matTooltip="Új jegy">
 	<mat-icon>add</mat-icon>

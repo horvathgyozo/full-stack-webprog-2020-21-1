@@ -1,8 +1,15 @@
+import { Label } from '@core/interfaces/label.interface';
+import { Message } from '@core/interfaces/message.interface';
+
 export interface Issue {
-    iid: number;
-    uid: number;
-    type: 'HW' | 'SW';
-    details: string;
-    timestamp: number;
-    status: 'ADDED' | 'ASSIGNED' | 'DONE';
+    id?: number;
+    title: string;
+    description: string;
+    place: string;
+    labels?: Label[];
+    status?: 'NEW' | 'DOING' | 'DONE';
+    user?: number;
+    createdAt?: string;
+    modifiedAt?: string;
+    messages?: Message[];
 }

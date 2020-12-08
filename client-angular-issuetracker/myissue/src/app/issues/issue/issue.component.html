@@ -1,0 +1,17 @@
+<mat-accordion multi>
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>#{{ issue.id }} - {{ issue.title }}</mat-panel-title>
+            <mat-panel-description>
+                <span><mat-icon>schedule</mat-icon><span class="label">{{ issue.createdAt }}</span></span>
+                <span><mat-icon>place</mat-icon><span class="label">{{ issue.place }}</span></span>
+                <span><mat-icon>message</mat-icon><span class="label">{{ (issue.description.length > 50) ? (issue.description | slice:0:50) + '...' : issue.description }}</span></span>
+                <button mat-mini-fab color="primary" class="edit-button" (click)="openEditIssueDialog(issue)" matTooltip="Jegy szerkesztése">
+                    <mat-icon>edit</mat-icon>
+                </button>
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <h4>Leírás:</h4>
+        <p>{{ issue.description }}</p>
+    </mat-expansion-panel>
+</mat-accordion>

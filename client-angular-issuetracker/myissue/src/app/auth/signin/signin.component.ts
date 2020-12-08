@@ -7,26 +7,26 @@ import { NotificationService } from '@core/services/notification.service';
 import { User } from '@core/interfaces/user.interface';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  selector: 'app-signin',
+  templateUrl: './signin.component.html',
+  styleUrls: ['./signin.component.scss']
 })
-export class LoginComponent {
+export class SigninComponent {
 
-  public loginForm: FormGroup;
+  public signinForm: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
     protected as: AuthService,
     private ns : NotificationService
   ) {
-    this.loginForm = this.formBuilder.group({
-      username: [null, Validators.required],
+    this.signinForm = this.formBuilder.group({
+      username: [null, [Validators.email, Validators.required]],
       password: [null, Validators.required]
     });
   }
 
-  login (form: FormGroup) {
+  signin(form: FormGroup): void {
     if (form.valid) {
       this.as.login(<User>form.value);
     }

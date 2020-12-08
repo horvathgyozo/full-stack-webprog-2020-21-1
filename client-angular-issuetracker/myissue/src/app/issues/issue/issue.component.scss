@@ -1,0 +1,20 @@
+.mat-accordion {
+	.mat-expansion-panel {
+		margin: 0 0 15px 0;
+		pansion-panel-header-title,
+		.mat-expansion-panel-header-title,
+		.mat-expansion-panel-header-description {
+			flex-basis: 0;
+			justify-content: space-between;
+			align-items: center;
+			span.label {
+				position: absolute;
+				margin: 5px 0 2px 5px;
+				font-size: 14px;
+			}
+		}
+		.mat-form-field + .mat-form-field {
+			margin-left: 8px;
+		}
+	}
+}

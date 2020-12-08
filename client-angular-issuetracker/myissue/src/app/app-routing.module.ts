@@ -1,15 +1,20 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { LoginComponent } from './login/login.component';
+import { AuthGuard } from '@core/guards/auth.guard';
+import { AnonymGuard } from '@core/guards/anonym.guard';
+
+import { AuthComponent } from './auth/auth.component';
 import { IssuesComponent } from './issues/issues.component';
 
+import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
+
 const routes: Routes = [
-	{ path: '', redirectTo: 'login', pathMatch: 'full' },
-	{ path: 'login', component: LoginComponent },
-	{ path: 'issues/open', component: IssuesComponent },
-	{ path: 'issues/closed', component: IssuesComponent },
-	{ path: '**', redirectTo: 'issues/open', pathMatch: 'full' }
+	{ path: '', component: AuthComponent, /*canActivate: [AnonymGuard]*/ },
+	{ path: 'issues/active', component: IssuesComponent, canActivate: [AuthGuard] },
+	{ path: 'issues/closed', component: IssuesComponent, canActivate: [AuthGuard] },
+	{ path: '404', component: PagenotfoundComponent },
+		{ path: '**', redirectTo: '404', pathMatch: 'full' }
 ];
 
 @NgModule({

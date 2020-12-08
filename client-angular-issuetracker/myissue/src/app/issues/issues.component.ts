@@ -1,23 +1,30 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Observable, Subscription } from 'rxjs';
 
 import { IssueService } from '@core/services/issue.service';
-import { AddIssueComponent } from './add-issue/add-issue.component';
+import { AddEditIssueComponent } from './add-edit-issue/add-edit-issue.component';
+
+import { Issue } from '@core/interfaces/issue.interface';
 
 @Component({
 	selector: 'app-issues',
 	templateUrl: './issues.component.html',
 	styleUrls: ['./issues.component.scss']
 })
-export class IssuesComponent {
+export class IssuesComponent implements OnInit {
 
 	constructor(
 		public dialog: MatDialog,
 		public is: IssueService
 	) { }
 
+	ngOnInit(): void {
+		this.is.getIssues();
+	}
+
 	openAddIssueDialog(): void {
-		const dialogRef = this.dialog.open(AddIssueComponent, {
+		const dialogRef = this.dialog.open(AddEditIssueComponent, {
 			width: '1000px'
 		})
 	}

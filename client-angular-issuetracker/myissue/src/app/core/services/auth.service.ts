@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 import { NotificationService } from '@core/services/notification.service';
 
@@ -14,28 +15,42 @@ import { baseUrl } from 'src/environments/environment';
 export class AuthService {
   isLogin$ = new BehaviorSubject<boolean>(this.hasToken());
 
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': ''
+    })
+  };
+
   constructor(
     private http: HttpClient,
-    private ns : NotificationService
+    private router: Router,
+    private ns: NotificationService
   ) { }
 
   isLoggedIn(): Observable<boolean> {
     return this.isLogin$.asObservable();
   }
 
-  login(user: User): void {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': ''
-      }),
-    }
-    this.http.post<User>(`${baseUrl}/user/login`, user, httpOptions).subscribe(
+  register(user: User): void {
+    this.http.post<User>(`${baseUrl}/user/register`, user, this.httpOptions).subscribe(
       data => {
-        console.log(data); // TODO: Use TOKEN from the data POST response.
-        localStorage.setItem('token', 'A223wedw34w');
+        this.ns.show('Sikeres regisztráció!');
+      },
+      error => {
+        this.ns.show('HIBA! Regisztráció sikertelen!');
+        console.error(error);
+      }
+    );
+  }
+
+  login(user: User): void {
+    this.http.post<User>(`${baseUrl}/user/login`, user, this.httpOptions).subscribe(
+      data => {
+        localStorage.setItem('token', data['token']);
         this.isLogin$.next(true);
         this.ns.show('Sikeres bejelentkezés!');
+        this.router.navigate(['/issues/active']);
       },
       error => {
         this.ns.show('HIBA! Bejelentkezés sikertelen!');
@@ -47,6 +62,8 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('token');
     this.isLogin$.next(false);
+    this.ns.show('Sikeres kijelentkezés!');
+    this.router.navigate(['/']);
   }
 
   protected hasToken(): boolean {

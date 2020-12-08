@@ -1,17 +1,27 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Observable, Subscription } from 'rxjs';
+
+import { AddEditIssueComponent } from '.././add-edit-issue/add-edit-issue.component';
+
+import { Issue } from '@core/interfaces/issue.interface';
 
 @Component({
   selector: 'app-issue',
   templateUrl: './issue.component.html',
   styleUrls: ['./issue.component.scss']
 })
-export class IssueComponent implements OnInit {
+export class IssueComponent {
 
- @Input() test: string;
+ @Input() issue: Issue = null;
 
-  constructor() { }
+  constructor(private dialog: MatDialog) { }
 
-  ngOnInit(): void {
-  }
+  openEditIssueDialog(issue: Issue): void {
+		const dialogRef = this.dialog.open(AddEditIssueComponent, {
+      width: '1000px',
+      data: issue
+		})
+	}
 
 }

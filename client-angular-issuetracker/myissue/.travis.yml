@@ -1,28 +1,42 @@
-language: node_js
+# Környezeti beállítások:
 
+language: node_js
 node_js:
   - "10"
 
-dist: trusty
+sudo: false
 
-sudo: required
+# Figyelt branch:
 
 branches:
   only:
   - master
+
+# Cache engedélyezés node_modules -ra:
+
+cache:
+  directories:
+    - node_modules
+
+# Angular CLI biztosítása a deploy alatt:
 
 before_script:
   - npm install -g @angular/cli
 
 script:
   - ng lint
-  - npm run test-headless
-  - ng build --prod --base-href [base_url]
+  - ng test --watch=false
+
+# Amennyiben nincsenek tesztek, úgy a "script" definiálására továbbra is szükség van (különben alapértelmezetten indul az npm test):
+
+# script: echo "npm test temporarily disabled"
+
+# Heroku - Travis-CI beállítások:
 
 deploy:
-  provider: pages
+  provider: heroku
   skip_cleanup: true
-  github_token: $GITHUB_TOKEN
-  local_dir: dist/myissue
-  on:
-    branch: master
+  keep-history: true
+  # API kulcs megadása Travis-CI felületén kerüljön hozzáadásra, ahol a változó neve: HEROKU_API_KEY értéke, pedig a Heroku UI-ban a projekt beállításai alatt található
+  api-key: $HEROKU_API_KEY
+  app: myissue

@@ -1,27 +1,43 @@
-# Myissue
+# Angular futtatás + deployment rövid leírás
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.2.
+## Fejlesztési célú futtatás
 
-## Development server
+A NodeJS csomagok telepítését követően (`npm install`) lokálisan futtatható az alkalmazás, amit a `ng serve` parancs kiadásával indíthatunk.
+A böngészőben a `http://localhost:4200/` címen megtekinthető az alkalmazás.
+Ekkor az esetleges módosítások elvégzését követően a compile ismételten megtörténik, így szinte azonnal látható a módosítás eredménye.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Deployment megvalósítás GitHub + Travis CI + Heroku alkalmazásával
 
-## Code scaffolding
+### Express integrálás
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+A Heroku-n webszerver céljait az Express fogja betölteni, így annak telepítésével és konfigurálásával kezdünk.
 
-## Build
+Telepítéshez az alkalmazás gyökér könyvtárában adjuk ki a `npm install --save express` parancsot, ezáltal települ az Express és függőségeknél megjelenik a `package.json` állományban.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Hozzuk létre a `server.js` állományt, ami az Express megvalósítását viszi végbe. (Részletek az általam készített `server.js` -ben.)
 
-## Running unit tests
+A `package.json` -ben végezzük el a az alábbi módosításokat:
+- alapértelmezett indítási parancs az Express servert indítsa: `"start": "ng serve"` -> `"start": "node server.js"`
+- `"postinstall": "ng build --aot --prod"` build indítás
+- `engines` blokk hozzáadása az általunk használt NodeJS és NPM verzióinak megfelelően
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+(Ezek definiálására a `.travis.yml` állományban is lehetőség van.)
 
-## Running end-to-end tests
+### Heroku projekt létrehozás
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Heroku-n hozzuk létre a projektet, amit megtehetünk a Heroku UI-on vagy Heroku CLI segítségével, majd mentsük le az API-key -t.
 
-## Further help
+### Travis CI
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Hozzuk a `.travis.yml` fájlt! (Részletek az általam készített `.travis.yml` -ben!)
+
+A Travis CI felületén kössük aktiváljuk a GitHub projektünket.
+Adjuk meg a Heroku APY-key -t változónak a projektünk beállításaiban.
+
+### Próbáljuk ki!
+
+Ezek után MASTER branchre történő push esetén elindul a pipeline, végül pedig kikerül a Heroku-ra az app.
+
+### Megjegyzések
+
+A Herocu CLI -al Travis nélkül közvetlenül is kitehetjük az appot, viszont abban az esetben a `dev-dependencies` -ből a `dependencies` -be kell áthelyezni az Angular CLI-t.
